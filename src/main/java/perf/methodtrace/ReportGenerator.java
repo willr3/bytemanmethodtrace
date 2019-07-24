@@ -35,6 +35,9 @@ public class ReportGenerator implements Command {
    @Option(shortName = 'd', required = true, description = "destination for output report file")
    private String destination;
 
+   @Option(shortName = 'f', required = false, defaultValue= ";", description = "field seperator for input lines")
+   private String delimiter;
+
    @Option(shortName = 't', required = false, description = "use a custom html template file", defaultValue = "")
    private String template;
 
@@ -145,7 +148,7 @@ public class ReportGenerator implements Command {
             int firstSpace = line.indexOf(" ");
             int secondSpace = line.indexOf(" ", firstSpace + 1);
             String timestamp = line.substring(0, secondSpace);
-            String split[] = line.substring(secondSpace + 1).split(":");
+            String split[] = line.substring(secondSpace + 1).split(delimiter);
             Json matched = new Json();
             matched.set("timestamp", timestamp);
             matched.set("threadId", Long.parseLong(split[0]));
